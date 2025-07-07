@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지 - Wongram Shop</title>
+    <link rel="stylesheet" href="css/blog-style.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <!-- Quill Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 로그인 화면 -->
+        <div id="loginScreen" class="admin-screen">
+            <div class="login-box">
+                <h2>관리자 로그인</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="아이디" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="비밀번호" required>
+                    </div>
+                    <button type="submit" class="login-button">로그인</button>
+                </form>
+                <div id="loginError" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- 관리자 대시보드 -->
+        <div id="adminDashboard" class="admin-screen hidden">
+            <header class="admin-header">
+                <h1>Wongram Shop 관리자</h1>
+                <nav class="admin-nav">
+                    <button onclick="showSection('write')" class="nav-button active">글쓰기</button>
+                    <button onclick="showSection('posts')" class="nav-button">글 목록</button>
+                    <button onclick="showSection('products')" class="nav-button">상품 관리</button>
+                    <button onclick="showSection('seo')" class="nav-button">SEO 설정</button>
+                    <button onclick="logout()" class="nav-button logout">로그아웃</button>
+                </nav>
+            </header>
+
+            <!-- 글쓰기 섹션 -->
+            <section id="writeSection" class="admin-section">
+                <h2>새 리뷰 작성</h2>
+                <form id="postForm">
+                    <!-- SEO 메타 정보 -->
+                    <div class="meta-section">
+                        <h3>SEO 설정</h3>
+                        <div class="form-group">
+                            <label>URL 슬러그 (영문, 숫자, 하이픈만)</label>
+                            <input type="text" id="postSlug" placeholder="best-wireless-earphones-2024" required>
+                        </div>
+                        <div class="form-group">
+                            <label>메타 설명 (검색 결과에 표시)</label>
+                            <textarea id="metaDescription" maxlength="160" placeholder="검색 결과에 표시될 설명 (최대 160자)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>키워드 (쉼표로 구분)</label>
+                            <input type="text" id="keywords" placeholder="무선이어폰, 에어팟, 갤럭시버즈, 이어폰추천">
+                        </div>
+                    </div>
+
+                    <!-- 기본 정보 -->
+                    <div class="form-group">
+                        <label>제목</label>
+                        <input type="text" id="postTitle" placeholder="2024년 최고의 무선 이어폰 TOP 5 완벽 비교" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>카테고리</label>
+                        <select id="postCategory" required>
+                            <option value="">선택하세요</option>
+                            <option value="electronics">전자제품</option>
+                            <option value="beauty">뷰티</option>
+                            <option value="fashion">패션</option>
+                            <option value="home">홈&리빙</option>
+                            <option value="food">식품</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>요약 (메인 페이지에 표시)</label>
+                        <textarea id="postExcerpt" rows="3" placeholder="리뷰 요약 내용..."></textarea>
+                    </div>
+
+                    <!-- 에디터 -->
+                    <div class="form-group">
+                        <label>본문 내용</label>
+                        <div id="editor" style="height: 400px;"></div>
+                    </div>
+
+                    <!-- 상품 정보 -->
+                    <div class="product-section">
+                        <h3>리뷰 상품 추가</h3>
+                        <div id="productList"></div>
+                        <button type="button" onclick="addProduct()" class="add-button">+ 상품 추가</button>
+                    </div>
+
+                    <!-- 발행 옵션 -->
+                    <div class="publish-options">
+                        <label>
+                            <input type="checkbox" id="publishNow" checked>
+                            즉시 발행
+                        </label>
+                        <label>
+                            <input type="checkbox" id="featuredPost">
+                            추천 글로 설정
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" onclick="saveAsDraft()" class="draft-button">임시저장</button>
+                        <button type="submit" class="publish-button">발행하기</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 글 목록 섹션 -->
+            <section id="postsSection" class="admin-section hidden">
+                <h2>글 목록</h2>
+                <div class="posts-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>제목</th>
+                                <th>카테고리</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsList">
+                            <!-- 글 목록이 여기에 표시됩니다 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 상품 관리 섹션 -->
+            <section id="productsSection" class="admin-section hidden">
+                <h2>쿠팡 상품 관리</h2>
+                <div class="product-manager">
+                    <div class="form-group">
+                        <label>쿠팡파트너스 트래킹 코드</label>
+                        <input type="text" id="trackingCode" placeholder="AF1234567">
+                    </div>
+                    <div class="coupang-search">
+                        <input type="text" id="coupangSearch" placeholder="상품명 또는 URL 입력">
+                        <button onclick="searchCoupangProduct()">검색</button>
+                    </div>
+                    <div id="searchResults"></div>
+                </div>
+            </section>
+
+            <!-- SEO 설정 섹션 -->
+            <section id="seoSection" class="admin-section hidden">
+                <h2>SEO 전역 설정</h2>
+                <form id="seoForm">
+                    <div class="form-group">
+                        <label>사이트 제목</label>
+                        <input type="text" id="siteTitle" value="Wongram Shop - 스마트한 쇼핑 가이드">
+                    </div>
+                    <div class="form-group">
+                        <label>사이트 설명</label>
+                        <textarea id="siteDescription">쿠팡 제품 리뷰와 비교 분석을 통한 스마트한 쇼핑 가이드</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Google Analytics ID</label>
+                        <input type="text" id="gaId" placeholder="G-XXXXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>네이버 웹마스터 도구</label>
+                        <input type="text" id="naverVerification" placeholder="verification code">
+                    </div>
+                    <button type="submit" class="save-button">저장</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- 상품 추가 템플릿 -->
+    <template id="productTemplate">
+        <div class="product-item">
+            <div class="form-group">
+                <label>상품명</label>
+                <input type="text" class="product-name" placeholder="애플 에어팟 프로 2세대" required>
+            </div>
+            <div class="form-group">
+                <label>쿠팡 링크</label>
+                <input type="url" class="product-url" placeholder="https://link.coupang.com/..." required>
+            </div>
+            <div class="form-group">
+                <label>가격</label>
+                <input type="text" class="product-price" placeholder="289,000원">
+            </div>
+            <div class="form-group">
+                <label>평점</label>
+                <input type="number" class="product-rating" min="0" max="5" step="0.1" placeholder="4.8">
+            </div>
+            <button type="button" onclick="removeProduct(this)" class="remove-button">삭제</button>
+        </div>
+    </template>
+
+    <!-- Quill Editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="js/admin-script.js"></script>
+</body>
+</html>

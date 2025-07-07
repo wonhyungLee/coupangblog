@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 메인 페이지 -->
+    <url>
+        <loc>https://wongram.shop/</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- 카테고리 페이지 -->
+    <url>
+        <loc>https://wongram.shop/category/electronics</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/category/beauty</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/category/fashion</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/category/home</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/category/food</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 리뷰 페이지 예시 -->
+    <url>
+        <loc>https://wongram.shop/review/wireless-earphones-2024</loc>
+        <lastmod>2024-03-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/review/spring-skincare-essentials</loc>
+        <lastmod>2024-03-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 테트리스 게임 -->
+    <url>
+        <loc>https://wongram.shop/tetris-game</loc>
+        <lastmod>2024-03-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <!-- 정책 페이지 -->
+    <url>
+        <loc>https://wongram.shop/privacy</loc>
+        <lastmod>2024-03-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <url>
+        <loc>https://wongram.shop/terms</loc>
+        <lastmod>2024-03-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+</urlset>

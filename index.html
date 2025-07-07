@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wongram Shop - 스마트한 쇼핑 가이드</title>
+    
+    <!-- SEO 메타 태그 -->
+    <meta name="description" content="쿠팡 제품 리뷰와 비교 분석을 통한 스마트한 쇼핑 가이드. 다양한 제품의 상세 리뷰와 추천 정보를 제공합니다.">
+    <meta name="keywords" content="쿠팡, 제품 리뷰, 쇼핑 가이드, 제품 비교, 쿠팡파트너스, 온라인 쇼핑">
+    <meta name="author" content="Wongram Shop">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wongram.shop">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wongram.shop">
+    <meta property="og:title" content="Wongram Shop - 스마트한 쇼핑 가이드">
+    <meta property="og:description" content="쿠팡 제품 리뷰와 비교 분석을 통한 스마트한 쇼핑 가이드">
+    <meta property="og:locale" content="ko_KR">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/blog-style.css">
+    
+    <!-- 쿠팡파트너스 SDK -->
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="site-title">Wongram Shop</h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">홈</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">카테고리</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#electronics">전자제품</a></li>
+                                <li><a href="#beauty">뷰티</a></li>
+                                <li><a href="#fashion">패션</a></li>
+                                <li><a href="#home">홈&리빙</a></li>
+                                <li><a href="#food">식품</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#reviews">최신 리뷰</a></li>
+                        <li><a href="#best">베스트 상품</a></li>
+                        <li><a href="/tetris-game" target="_blank">게임</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 히어로 섹션 -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2>스마트한 쇼핑의 시작</h2>
+                    <p>전문가의 시선으로 분석한 제품 리뷰와 비교 정보</p>
+                    <div class="search-box">
+                        <input type="text" placeholder="찾고 있는 제품을 검색하세요..." id="searchInput">
+                        <button onclick="searchProducts()">검색</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 추천 상품 섹션 -->
+            <section class="featured-products">
+                <h2 class="section-title">오늘의 추천 상품</h2>
+                <div class="product-grid" id="featuredProducts">
+                    <!-- 쿠팡파트너스 상품 예시 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/300x300" alt="상품 이미지">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">삼성 갤럭시 버즈2 프로</h3>
+                            <div class="product-rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-count">(1,234)</span>
+                            </div>
+                            <p class="product-price">159,000원</p>
+                            <a href="#" class="coupang-link" onclick="trackClick('product1')">쿠팡에서 보기</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 더 많은 상품 카드들이 여기에 추가됩니다 -->
+                </div>
+            </section>
+
+            <!-- 최신 리뷰 섹션 -->
+            <section class="latest-reviews" id="reviews">
+                <h2 class="section-title">최신 제품 리뷰</h2>
+                <div class="review-list">
+                    <article class="review-card">
+                        <h3><a href="#">2024년 최고의 무선 이어폰 TOP 5 비교 리뷰</a></h3>
+                        <p class="review-excerpt">올해 출시된 주요 무선 이어폰들을 직접 사용해보고 음질, 착용감, 배터리 수명 등을 비교 분석했습니다...</p>
+                        <div class="review-meta">
+                            <span class="date">2024.03.15</span>
+                            <span class="category">전자제품</span>
+                        </div>
+                    </article>
+                    
+                    <article class="review-card">
+                        <h3><a href="#">봄맞이 스킨케어 필수템 리뷰</a></h3>
+                        <p class="review-excerpt">건조한 봄 날씨에 꼭 필요한 스킨케어 제품들을 피부 타입별로 정리했습니다...</p>
+                        <div class="review-meta">
+                            <span class="date">2024.03.14</span>
+                            <span class="category">뷰티</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- 카테고리별 베스트 상품 -->
+            <section class="category-best" id="best">
+                <h2 class="section-title">카테고리별 베스트</h2>
+                <div class="category-tabs">
+                    <button class="tab-button active" onclick="showCategory('electronics')">전자제품</button>
+                    <button class="tab-button" onclick="showCategory('beauty')">뷰티</button>
+                    <button class="tab-button" onclick="showCategory('fashion')">패션</button>
+                    <button class="tab-button" onclick="showCategory('home')">홈&리빙</button>
+                </div>
+                <div class="category-content" id="categoryContent">
+                    <!-- 카테고리별 상품이 여기에 표시됩니다 -->
+                </div>
+            </section>
+
+            <!-- 쿠팡파트너스 배너 영역 -->
+            <section class="partner-banner">
+                <div class="banner-container">
+                    <!-- 쿠팡파트너스 배너 코드가 여기에 들어갑니다 -->
+                    <script src="https://ads-partners.coupang.com/g.js"></script>
+                    <script>
+                        new PartnersCoupang.G({ id:123456 });
+                    </script>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wongram Shop</h3>
+                    <p>스마트한 쇼핑을 위한 최고의 가이드</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="#about">소개</a></li>
+                        <li><a href="#contact">문의하기</a></li>
+                        <li><a href="#privacy">개인정보처리방침</a></li>
+                        <li><a href="#terms">이용약관</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>쿠팡파트너스 안내</h4>
+                    <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wongram Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 관리자 버튼 (로그인 상태에서만 표시) -->
+    <div id="adminButton" class="admin-button hidden" onclick="goToAdmin()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+    </div>
+
+    <script src="js/blog-script.js"></script>
+    <script>
+        // 관리자 버튼 표시 확인
+        if (localStorage.getItem('adminAuth') === 'true') {
+            document.getElementById('adminButton').classList.remove('hidden');
+        }
+        
+        function goToAdmin() {
+            window.location.href = '/admin.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">리뷰 - Wongram Shop</title>
+    
+    <!-- 동적 메타 태그 -->
+    <meta name="description" id="metaDescription" content="">
+    <meta name="keywords" id="metaKeywords" content="">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+    <link rel="stylesheet" href="/css/review-style.css">
+    
+    <!-- 쿠팡파트너스 SDK -->
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="site-title"><a href="/">Wongram Shop</a></h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">홈</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">카테고리</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/category/electronics">전자제품</a></li>
+                                <li><a href="/category/beauty">뷰티</a></li>
+                                <li><a href="/category/fashion">패션</a></li>
+                                <li><a href="/category/home">홈&리빙</a></li>
+                                <li><a href="/category/food">식품</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/#reviews">최신 리뷰</a></li>
+                        <li><a href="/#best">베스트 상품</a></li>
+                        <li><a href="/tetris-game" target="_blank">게임</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 리뷰 컨텐츠 -->
+    <main class="review-main">
+        <div class="container">
+            <article class="review-article" id="reviewContent">
+                <!-- 동적으로 로드됩니다 -->
+                <div class="loading">리뷰를 불러오는 중...</div>
+            </article>
+
+            <!-- 사이드바 -->
+            <aside class="review-sidebar">
+                <!-- 인기 리뷰 -->
+                <div class="sidebar-widget">
+                    <h3>인기 리뷰</h3>
+                    <ul class="popular-reviews" id="popularReviews">
+                        <!-- 동적으로 로드됩니다 -->
+                    </ul>
+                </div>
+
+                <!-- 쿠팡 배너 광고 -->
+                <div class="sidebar-widget">
+                    <script src="https://ads-partners.coupang.com/g.js"></script>
+                    <script>
+                        new PartnersCoupang.G({
+                            id: 567890,
+                            template: "banner",
+                            trackingCode: "AF1234567",
+                            width: "300",
+                            height: "250"
+                        });
+                    </script>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wongram Shop</h3>
+                    <p>스마트한 쇼핑을 위한 최고의 가이드</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="#about">소개</a></li>
+                        <li><a href="#contact">문의하기</a></li>
+                        <li><a href="#privacy">개인정보처리방침</a></li>
+                        <li><a href="#terms">이용약관</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>쿠팡파트너스 안내</h4>
+                    <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wongram Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/review-loader.js"></script>
+</body>
+</html>
