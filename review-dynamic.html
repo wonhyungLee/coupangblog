@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 로딩 중... - Wongram Shop</title>
+    
+    <!-- 기본 SEO 메타 태그 (동적으로 업데이트됨) -->
+    <meta name="description" content="Wongram Shop의 제품 리뷰">
+    <meta name="keywords" content="제품 리뷰, 쿠팡, 쇼핑 가이드">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:locale" content="ko_KR">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+    <link rel="stylesheet" href="/css/review-style.css">
+    
+    <!-- 쿠팡파트너스 SDK -->
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="site-title"><a href="/">Wongram Shop</a></h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">홈</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">카테고리</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/?category=electronics">전자제품</a></li>
+                                <li><a href="/?category=beauty">뷰티</a></li>
+                                <li><a href="/?category=fashion">패션</a></li>
+                                <li><a href="/?category=home">홈&리빙</a></li>
+                                <li><a href="/?category=food">식품</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/#reviews">최신 리뷰</a></li>
+                        <li><a href="/#best">베스트 상품</a></li>
+                        <li><a href="/tetris-game" target="_blank">게임</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 로딩 표시 -->
+    <div id="loadingIndicator" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>리뷰를 불러오는 중...</p>
+    </div>
+
+    <!-- 리뷰 컨텐츠 (동적으로 로드됨) -->
+    <main id="reviewMain" class="review-main" style="display: none;">
+        <div class="container">
+            <article class="review-article">
+                <!-- 리뷰 헤더 -->
+                <header class="review-header">
+                    <div class="breadcrumb" id="breadcrumb">
+                        <a href="/">홈</a> &gt; <span id="categoryLink"></span> &gt; <span id="reviewTitle"></span>
+                    </div>
+                    <h1 class="review-title" id="mainTitle"></h1>
+                    <div class="review-meta">
+                        <span class="author">작성자: Wongram</span>
+                        <span class="date" id="reviewDate"></span>
+                        <span class="views" id="viewCount">조회수: 0</span>
+                    </div>
+                </header>
+
+                <!-- 리뷰 본문 -->
+                <div class="review-content" id="reviewContent">
+                    <!-- 내용이 여기에 동적으로 삽입됩니다 -->
+                </div>
+
+                <!-- 테트리스 게임 프로모션 -->
+                <div class="tetris-promotion-section">
+                    <div class="tetris-card">
+                        <h3>🎮 잠깐! 쇼핑 피로감을 느끼시나요?</h3>
+                        <p>집중력 향상과 스트레스 해소에 좋은 테트리스 게임을 즐겨보세요!</p>
+                        <a href="/tetris-game" target="_blank" class="tetris-play-button">
+                            테트리스 플레이하기
+                        </a>
+                        <small>* 게임 후 쇼핑하면 더 현명한 선택을 할 수 있어요! 😊</small>
+                    </div>
+                </div>
+
+                <!-- 쿠팡파트너스 공지 -->
+                <div class="affiliate-notice">
+                    <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                </div>
+
+                <!-- 관련 리뷰 -->
+                <section class="related-reviews">
+                    <h2>관련 리뷰</h2>
+                    <div class="related-grid" id="relatedReviews">
+                        <!-- 관련 리뷰가 동적으로 로드됩니다 -->
+                    </div>
+                </section>
+            </article>
+
+            <!-- 사이드바 -->
+            <aside class="review-sidebar">
+                <!-- 인기 리뷰 -->
+                <div class="sidebar-widget">
+                    <h3>인기 리뷰</h3>
+                    <ul class="popular-reviews" id="popularReviews">
+                        <!-- 인기 리뷰가 동적으로 로드됩니다 -->
+                    </ul>
+                </div>
+
+                <!-- 테트리스 게임 위젯 -->
+                <div class="sidebar-widget tetris-widget">
+                    <div class="tetris-mini-banner">
+                        <div class="tetris-icon">🎮</div>
+                        <h4>테트리스 랭킹</h4>
+                        <p>최고 점수에 도전하세요!</p>
+                        <a href="/tetris-game" target="_blank" class="tetris-link">게임 시작</a>
+                    </div>
+                </div>
+
+                <!-- 쿠팡 배너 광고 -->
+                <div class="sidebar-widget">
+                    <script src="https://ads-partners.coupang.com/g.js"></script>
+                    <script>
+                        new PartnersCoupang.G({
+                            id: 567890,
+                            template: "banner",
+                            trackingCode: "AF1234567",
+                            width: "300",
+                            height: "250"
+                        });
+                    </script>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- 오류 메시지 -->
+    <div id="errorMessage" class="error-container" style="display: none;">
+        <div class="container">
+            <h2>리뷰를 찾을 수 없습니다</h2>
+            <p>요청하신 리뷰가 존재하지 않거나 삭제되었습니다.</p>
+            <a href="/" class="back-home-button">홈으로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wongram Shop</h3>
+                    <p>스마트한 쇼핑을 위한 최고의 가이드</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="#about">소개</a></li>
+                        <li><a href="#contact">문의하기</a></li>
+                        <li><a href="#privacy">개인정보처리방침</a></li>
+                        <li><a href="#terms">이용약관</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>쿠팡파트너스 안내</h4>
+                    <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wongram Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/blog-script-enhanced.js"></script>
+    <script src="/js/review-loader.js"></script>
+    
+    <!-- 구조화된 데이터 (동적으로 추가됨) -->
+    <script id="structuredData" type="application/ld+json"></script>
+</body>
+</html>

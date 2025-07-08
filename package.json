@@ -1,22 +1,27 @@
 {
-  "name": "tetris-game",
-  "version": "1.0.0",
-  "description": "모바일 지원 테트리스 게임 with 랭킹 시스템 and 광고 연동",
-  "main": "server.js",
+  "name": "coupang-blog",
+  "version": "2.0.0",
+  "description": "쿠팡 파트너스 블로그 with 테트리스 게임 연동 - SEO 최적화 및 리뷰 관리 시스템",
+  "main": "server-enhanced.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node server-enhanced.js",
+    "start-original": "node server.js",
+    "dev": "nodemon server-enhanced.js",
     "install-deps": "npm install",
-    "setup": "npm install && echo '설치 완료! npm start로 서버를 시작하세요.'"
+    "setup": "npm install && echo '설치 완료! npm start로 서버를 시작하세요.'",
+    "build-sitemap": "node scripts/build-sitemap.js"
   },
   "keywords": [
+    "coupang",
+    "partners",
+    "blog",
+    "review",
     "tetris",
     "game",
-    "mobile",
-    "ranking",
-    "adsense"
+    "seo",
+    "shopping"
   ],
-  "author": "Your Name",
+  "author": "Wongram",
   "license": "MIT",
   "dependencies": {
     "compression": "^1.7.4",
