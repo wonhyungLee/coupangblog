@@ -1,0 +1,56 @@
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>사이트 정보</h3>
+                    <p><%= process.env.SITE_DESCRIPTION %></p>
+                    <p>쿠팡 파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있습니다.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>빠른 링크</h3>
+                    <ul>
+                        <li><a href="/reviews">최신 리뷰</a></li>
+                        <li><a href="/game/tetris">테트리스 게임</a></li>
+                        <li><a href="/sitemap.xml">사이트맵</a></li>
+                        <li><a href="/robots.txt">Robots.txt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>카테고리</h3>
+                    <ul>
+                        <li><a href="/reviews/category/전자제품">전자제품</a></li>
+                        <li><a href="/reviews/category/생활용품">생활용품</a></li>
+                        <li><a href="/reviews/category/패션">패션</a></li>
+                        <li><a href="/reviews/category/식품">식품</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>연락처</h3>
+                    <p>문의사항이 있으시면 이메일로 연락주세요.</p>
+                    <p>Email: contact@example.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <%= process.env.SITE_NAME %>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <!-- Google Analytics (추가 시) -->
+    <% if (typeof googleAnalyticsId !== 'undefined' && googleAnalyticsId) { %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= googleAnalyticsId %>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%= googleAnalyticsId %>');
+    </script>
+    <% } %>
+</body>
+</html>

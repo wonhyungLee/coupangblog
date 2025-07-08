@@ -1,0 +1,456 @@
+<%- include('header') %>
+
+<div class="container">
+    <article class="review-detail">
+        <header class="review-header">
+            <div class="review-meta">
+                <span class="category-badge"><%= review.category %></span>
+                <span class="date"><%= new Date(review.publishedAt || review.createdAt).toLocaleDateString('ko-KR') %></span>
+                <span class="author">by <%= review.author.username %></span>
+                <span class="views"><i class="icon-eye"></i> <%= review.views %> 조회</span>
+            </div>
+            <h1><%= review.title %></h1>
+            <% if (review.tags.length > 0) { %>
+            <div class="tags">
+                <% review.tags.forEach(tag => { %>
+                <span class="tag">#<%= tag %></span>
+                <% }) %>
+            </div>
+            <% } %>
+        </header>
+
+        <!-- Google AdSense - 상단 -->
+        <% if (process.env.GOOGLE_ADSENSE_CLIENT) { %>
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+                 data-ad-slot="YOUR-CONTENT-TOP-AD"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <% } %>
+
+        <div class="review-content">
+            <%- review.content %>
+        </div>
+
+        <% if (review.products && review.products.length > 0) { %>
+        <section class="product-comparison">
+            <h2>제품 비교</h2>
+            <div class="products-grid">
+                <% review.products.forEach((product, index) => { %>
+                <div class="product-card">
+                    <% if (product.imageUrl) { %>
+                    <div class="product-image">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    </div>
+                    <% } %>
+                    <h3><%= product.name %></h3>
+                    <div class="product-price">₩<%= product.price.toLocaleString('ko-KR') %></div>
+                    <% if (product.rating) { %>
+                    <div class="product-rating">
+                        <% for(let i = 0; i < 5; i++) { %>
+                        <span class="star <%= i < product.rating ? 'filled' : '' %>">★</span>
+                        <% } %>
+                    </div>
+                    <% } %>
+                    
+                    <% if (product.pros && product.pros.length > 0) { %>
+                    <div class="pros-cons">
+                        <h4>장점</h4>
+                        <ul class="pros">
+                            <% product.pros.forEach(pro => { %>
+                            <li><%= pro %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                    <% } %>
+                    
+                    <% if (product.cons && product.cons.length > 0) { %>
+                    <div class="pros-cons">
+                        <h4>단점</h4>
+                        <ul class="cons">
+                            <% product.cons.forEach(con => { %>
+                            <li><%= con %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                    <% } %>
+                    
+                    <a href="<%= product.coupangUrl %>" target="_blank" rel="nofollow" class="btn btn-primary coupang-btn">
+                        쿠팡에서 보기
+                    </a>
+                </div>
+                <% }) %>
+            </div>
+            <p class="affiliate-notice">
+                * 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받을 수 있습니다.
+            </p>
+        </section>
+        <% } %>
+
+        <!-- Google AdSense - 중간 -->
+        <% if (process.env.GOOGLE_ADSENSE_CLIENT) { %>
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+                 data-ad-slot="YOUR-CONTENT-MIDDLE-AD"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <% } %>
+
+        <footer class="review-footer">
+            <div class="like-section">
+                <button class="like-btn" onclick="likeReview('<%= review._id %>')">
+                    <span class="heart">❤️</span> 좋아요 <span id="like-count"><%= review.likes %></span>
+                </button>
+            </div>
+            
+            <div class="share-section">
+                <h3>공유하기</h3>
+                <div class="share-buttons">
+                    <button onclick="shareKakao()" class="share-btn kakao">카카오톡</button>
+                    <button onclick="shareFacebook()" class="share-btn facebook">페이스북</button>
+                    <button onclick="shareTwitter()" class="share-btn twitter">트위터</button>
+                    <button onclick="copyLink()" class="share-btn link">링크 복사</button>
+                </div>
+            </div>
+        </footer>
+    </article>
+
+    <% if (relatedReviews && relatedReviews.length > 0) { %>
+    <section class="related-reviews">
+        <h2>관련 리뷰</h2>
+        <div class="review-grid">
+            <% relatedReviews.forEach(related => { %>
+            <article class="review-card">
+                <a href="/reviews/<%= related.slug %>">
+                    <div class="review-image">
+                        <img src="<%= related.featuredImage || '/images/default-review.png' %>" alt="<%= related.title %>">
+                    </div>
+                    <div class="review-content">
+                        <span class="review-category"><%= related.category %></span>
+                        <h3><%= related.title %></h3>
+                        <span class="date"><%= new Date(related.createdAt).toLocaleDateString('ko-KR') %></span>
+                    </div>
+                </a>
+            </article>
+            <% }) %>
+        </div>
+    </section>
+    <% } %>
+</div>
+
+<style>
+.review-detail {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 3rem;
+}
+
+.review-header {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.review-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.category-badge {
+    background: #007bff;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+}
+
+.review-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: #f8f9fa;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.review-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.review-content h2,
+.review-content h3 {
+    margin: 2rem 0 1rem;
+}
+
+.review-content p {
+    margin-bottom: 1.5rem;
+}
+
+.product-comparison {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.product-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    height: 200px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 0.5rem;
+}
+
+.product-rating {
+    margin-bottom: 1rem;
+}
+
+.star {
+    color: #ddd;
+    font-size: 1.25rem;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.pros-cons {
+    margin: 1rem 0;
+}
+
+.pros-cons h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.pros-cons ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pros li::before {
+    content: "✓ ";
+    color: #28a745;
+    font-weight: bold;
+}
+
+.cons li::before {
+    content: "✗ ";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.coupang-btn {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.affiliate-notice {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 1rem;
+}
+
+.review-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.like-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.like-btn {
+    background: white;
+    border: 2px solid #e74c3c;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.like-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.heart {
+    font-size: 1.25rem;
+}
+
+.share-section {
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.share-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+}
+
+.share-btn.kakao { background: #FEE500; color: #000; }
+.share-btn.facebook { background: #3b5998; }
+.share-btn.twitter { background: #1da1f2; }
+.share-btn.link { background: #6c757d; }
+
+.related-reviews {
+    margin-top: 3rem;
+}
+
+.related-reviews h2 {
+    margin-bottom: 2rem;
+}
+</style>
+
+<script>
+// 좋아요 기능
+async function likeReview(reviewId) {
+    try {
+        const response = await fetch(`/api/reviews/${reviewId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('like-count').textContent = data.likes;
+        }
+    } catch (error) {
+        console.error('좋아요 처리 실패:', error);
+    }
+}
+
+// 공유 기능
+function shareKakao() {
+    // 카카오 SDK가 로드되어 있다면
+    if (window.Kakao) {
+        Kakao.Link.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '<%= review.title %>',
+                description: '<%= review.metaDescription %>',
+                imageUrl: '<%= review.featuredImage || "" %>',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href
+                }
+            }
+        });
+    }
+}
+
+function shareFacebook() {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`);
+}
+
+function shareTwitter() {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('<%= review.title %>')}&url=${encodeURIComponent(window.location.href)}`);
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('링크가 복사되었습니다!');
+    });
+}
+</script>
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "headline": "<%= review.title %>",
+    "author": {
+        "@type": "Person",
+        "name": "<%= review.author.username %>"
+    },
+    "datePublished": "<%= (review.publishedAt || review.createdAt).toISOString() %>",
+    "dateModified": "<%= review.updatedAt.toISOString() %>",
+    "publisher": {
+        "@type": "Organization",
+        "name": "<%= process.env.SITE_NAME %>"
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "<%= review.products.length > 0 ? (review.products.reduce((sum, p) => sum + (p.rating || 0), 0) / review.products.length).toFixed(1) : 0 %>",
+        "reviewCount": "<%= review.products.length %>"
+    }
+}
+</script>
+
+<%- include('footer') %>

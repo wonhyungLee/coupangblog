@@ -2,8 +2,6 @@ const express = require('express');
 const path = require('path');
 const compression = require('compression');
 const sqlite3 = require('sqlite3').verbose();
-const fs = require('fs').promises;
-const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -15,7 +13,6 @@ const db = new sqlite3.Database(DB_FILE, (err) => {
         console.error('데이터베이스 연결 실패:', err.message);
     } else {
         console.log('SQLite 데이터베이스에 연결되었습니다.');
-        // 테트리스 랭킹 테이블
         db.run(`CREATE TABLE IF NOT EXISTS rankings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nickname TEXT NOT NULL,

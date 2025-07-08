@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | <%= process.env.SITE_NAME %></title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : process.env.SITE_DESCRIPTION %>">
+    <meta name="keywords" content="테트리스, 쿠팡, 물품 비교, 리뷰, 게임">
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : process.env.SITE_DESCRIPTION %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= process.env.SITE_URL %>">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<%= process.env.SITE_URL %><%= typeof canonicalUrl !== 'undefined' ? canonicalUrl : '' %>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+    
+    <!-- Google AdSense -->
+    <% if (process.env.GOOGLE_ADSENSE_CLIENT) { %>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+         crossorigin="anonymous"></script>
+    <% } %>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "<%= process.env.SITE_NAME %>",
+        "url": "<%= process.env.SITE_URL %>",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "<%= process.env.SITE_URL %>/reviews/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">
+                    <h1><%= process.env.SITE_NAME %></h1>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="/">홈</a></li>
+                    <li class="dropdown">
+                        <a href="/reviews">리뷰</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/reviews/category/전자제품">전자제품</a></li>
+                            <li><a href="/reviews/category/생활용품">생활용품</a></li>
+                            <li><a href="/reviews/category/패션">패션</a></li>
+                            <li><a href="/reviews/category/식품">식품</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/game">게임</a></li>
+                    <% if (user) { %>
+                        <% if (user.role === 'admin') { %>
+                            <li><a href="/admin">관리자</a></li>
+                        <% } %>
+                        <li class="user-menu">
+                            <span>안녕하세요, <%= user.username %>님</span>
+                            <a href="/auth/logout" class="logout-btn">로그아웃</a>
+                        </li>
+                    <% } else { %>
+                        <li><a href="/auth/login">로그인</a></li>
+                        <li><a href="/auth/register" class="register-btn">회원가입</a></li>
+                    <% } %>
+                </ul>
+                <div class="search-box">
+                    <form action="/reviews/search" method="GET">
+                        <input type="search" name="q" placeholder="리뷰 검색..." required>
+                        <button type="submit">검색</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">

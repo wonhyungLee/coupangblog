@@ -1,0 +1,366 @@
+<%- include('../header') %>
+
+<div class="container">
+    <div class="editor-header">
+        <h1><%= review ? '리뷰 수정' : '새 리뷰 작성' %></h1>
+        <a href="/admin/reviews" class="btn btn-secondary">목록으로</a>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error">
+        <%= error %>
+    </div>
+    <% } %>
+
+    <form action="<%= action %>" method="POST" class="review-form">
+        <div class="form-section">
+            <h2>기본 정보</h2>
+            
+            <div class="form-group">
+                <label for="title">제목 *</label>
+                <input type="text" id="title" name="title" value="<%= review ? review.title : '' %>" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">카테고리 *</label>
+                    <select id="category" name="category" required>
+                        <option value="">카테고리 선택</option>
+                        <option value="전자제품" <%= review && review.category === '전자제품' ? 'selected' : '' %>>전자제품</option>
+                        <option value="생활용품" <%= review && review.category === '생활용품' ? 'selected' : '' %>>생활용품</option>
+                        <option value="패션" <%= review && review.category === '패션' ? 'selected' : '' %>>패션</option>
+                        <option value="식품" <%= review && review.category === '식품' ? 'selected' : '' %>>식품</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">태그 (쉼표로 구분)</label>
+                    <input type="text" id="tags" name="tags" value="<%= review ? review.tags.join(', ') : '' %>" placeholder="예: 가성비, 추천, 인기상품">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="content">내용 *</label>
+                <textarea id="content" name="content" rows="15" required><%= review ? review.content : '' %></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>제품 정보</h2>
+            <p class="form-help">비교할 쿠팡 제품들을 추가해주세요. 최소 2개 이상의 제품을 비교하는 것이 좋습니다.</p>
+            
+            <div id="products-container">
+                <!-- 제품 정보가 여기에 동적으로 추가됩니다 -->
+            </div>
+            
+            <button type="button" class="btn btn-secondary" onclick="addProduct()">+ 제품 추가</button>
+        </div>
+
+        <div class="form-section">
+            <h2>SEO 설정</h2>
+            
+            <div class="form-group">
+                <label for="metaTitle">메타 제목 (60자 이내)</label>
+                <input type="text" id="metaTitle" name="metaTitle" value="<%= review ? review.metaTitle : '' %>" maxlength="60">
+                <small class="char-count"><span id="metaTitleCount">0</span>/60</small>
+            </div>
+
+            <div class="form-group">
+                <label for="metaDescription">메타 설명 (160자 이내)</label>
+                <textarea id="metaDescription" name="metaDescription" rows="3" maxlength="160"><%= review ? review.metaDescription : '' %></textarea>
+                <small class="char-count"><span id="metaDescCount">0</span>/160</small>
+            </div>
+
+            <div class="seo-preview">
+                <h3>검색 결과 미리보기</h3>
+                <div class="search-preview">
+                    <div class="preview-title" id="previewTitle">제목을 입력하세요</div>
+                    <div class="preview-url"><%= process.env.SITE_URL %>/reviews/...</div>
+                    <div class="preview-description" id="previewDesc">설명을 입력하세요</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <div class="form-group">
+                <label for="status">상태</label>
+                <select id="status" name="status">
+                    <option value="draft" <%= review && review.status === 'draft' ? 'selected' : '' %>>초안</option>
+                    <option value="published" <%= review && review.status === 'published' ? 'selected' : '' %>>게시</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">저장</button>
+        </div>
+
+        <input type="hidden" id="products" name="products" value="<%= review ? JSON.stringify(review.products) : '[]' %>">
+    </form>
+</div>
+
+<style>
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.review-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-help {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.product-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.product-item h4 {
+    margin-bottom: 1rem;
+}
+
+.remove-product {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.char-count {
+    float: right;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.seo-preview {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.search-preview {
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+}
+
+.preview-title {
+    color: #1a0dab;
+    font-size: 18px;
+    margin-bottom: 0.25rem;
+}
+
+.preview-url {
+    color: #006621;
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+}
+
+.preview-description {
+    color: #545454;
+    font-size: 14px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .form-row,
+    .pros-cons-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+// 제품 데이터 관리
+let products = <%= review ? JSON.stringify(review.products) : '[]' %>;
+
+// 페이지 로드 시 제품 표시
+document.addEventListener('DOMContentLoaded', function() {
+    products.forEach((product, index) => {
+        displayProduct(product, index);
+    });
+    
+    updateCharCounts();
+    updateSeoPreview();
+});
+
+// 제품 추가
+function addProduct() {
+    const product = {
+        name: '',
+        coupangUrl: '',
+        price: 0,
+        rating: 5,
+        pros: [],
+        cons: [],
+        imageUrl: ''
+    };
+    
+    products.push(product);
+    displayProduct(product, products.length - 1);
+    updateProductsInput();
+}
+
+// 제품 표시
+function displayProduct(product, index) {
+    const container = document.getElementById('products-container');
+    const productHtml = `
+        <div class="product-item" data-index="${index}">
+            <button type="button" class="remove-product" onclick="removeProduct(${index})">×</button>
+            <h4>제품 ${index + 1}</h4>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>제품명 *</label>
+                    <input type="text" value="${product.name}" onchange="updateProduct(${index}, 'name', this.value)" required>
+                </div>
+                <div class="form-group">
+                    <label>쿠팡 URL *</label>
+                    <input type="url" value="${product.coupangUrl}" onchange="updateProduct(${index}, 'coupangUrl', this.value)" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>가격 (원) *</label>
+                    <input type="number" value="${product.price}" onchange="updateProduct(${index}, 'price', parseInt(this.value))" required>
+                </div>
+                <div class="form-group">
+                    <label>평점 (1-5)</label>
+                    <input type="number" min="1" max="5" value="${product.rating || 5}" onchange="updateProduct(${index}, 'rating', parseInt(this.value))">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>이미지 URL</label>
+                <input type="url" value="${product.imageUrl || ''}" onchange="updateProduct(${index}, 'imageUrl', this.value)">
+            </div>
+            
+            <div class="pros-cons-grid">
+                <div class="form-group">
+                    <label>장점 (줄바꿈으로 구분)</label>
+                    <textarea rows="3" onchange="updateProduct(${index}, 'pros', this.value.split('\\n').filter(v => v))">${(product.pros || []).join('\n')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>단점 (줄바꿈으로 구분)</label>
+                    <textarea rows="3" onchange="updateProduct(${index}, 'cons', this.value.split('\\n').filter(v => v))">${(product.cons || []).join('\n')}</textarea>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', productHtml);
+}
+
+// 제품 정보 업데이트
+function updateProduct(index, field, value) {
+    products[index][field] = value;
+    updateProductsInput();
+}
+
+// 제품 제거
+function removeProduct(index) {
+    if (confirm('이 제품을 삭제하시겠습니까?')) {
+        products.splice(index, 1);
+        document.querySelector(`[data-index="${index}"]`).remove();
+        
+        // 인덱스 재정렬
+        document.querySelectorAll('.product-item').forEach((item, i) => {
+            item.setAttribute('data-index', i);
+            item.querySelector('h4').textContent = `제품 ${i + 1}`;
+        });
+        
+        updateProductsInput();
+    }
+}
+
+// hidden input 업데이트
+function updateProductsInput() {
+    document.getElementById('products').value = JSON.stringify(products);
+}
+
+// 문자 수 카운트
+function updateCharCounts() {
+    const metaTitle = document.getElementById('metaTitle');
+    const metaDesc = document.getElementById('metaDescription');
+    
+    metaTitle.addEventListener('input', function() {
+        document.getElementById('metaTitleCount').textContent = this.value.length;
+        updateSeoPreview();
+    });
+    
+    metaDesc.addEventListener('input', function() {
+        document.getElementById('metaDescCount').textContent = this.value.length;
+        updateSeoPreview();
+    });
+    
+    // 초기 카운트
+    document.getElementById('metaTitleCount').textContent = metaTitle.value.length;
+    document.getElementById('metaDescCount').textContent = metaDesc.value.length;
+}
+
+// SEO 미리보기 업데이트
+function updateSeoPreview() {
+    const title = document.getElementById('metaTitle').value || document.getElementById('title').value;
+    const desc = document.getElementById('metaDescription').value || document.getElementById('content').value.substring(0, 160);
+    
+    document.getElementById('previewTitle').textContent = title || '제목을 입력하세요';
+    document.getElementById('previewDesc').textContent = desc || '설명을 입력하세요';
+}
+
+// 제목 변경 시 SEO 미리보기 업데이트
+document.getElementById('title').addEventListener('input', updateSeoPreview);
+document.getElementById('content').addEventListener('input', updateSeoPreview);
+</script>
+
+<%- include('../footer') %>
