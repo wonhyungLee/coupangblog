@@ -2,8 +2,40 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../models/Review');
 
-// 리뷰 목록 (API)
+// 리뷰 목록 페이지
 router.get('/', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12;
+    const skip = (page - 1) * limit;
+    
+    const reviews = await Review.find({ status: 'published' })
+      .populate('author', 'username')
+      .sort('-publishedAt')
+      .skip(skip)
+      .limit(limit);
+    
+    const total = await Review.countDocuments({ status: 'published' });
+    
+    res.render('review-list', {
+      title: '전체 리뷰',
+      reviews,
+      category: null,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      user: req.session.user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).render('error', {
+      title: '오류',
+      error: { message: '리뷰 목록을 불러올 수 없습니다.' }
+    });
+  }
+});
+
+// 리뷰 목록 (API)
+router.get('/api', async (req, res) => {
   try {
     const { category, tag, page = 1, limit = 10 } = req.query;
     const skip = (page - 1) * limit;

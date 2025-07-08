@@ -1,0 +1,109 @@
+<%- include('header') %>
+
+<div class="container">
+    <div class="search-header">
+        <h1>검색 결과</h1>
+        <p class="search-query">"<%= query %>"에 대한 검색 결과 <%= reviews.length %>개</p>
+    </div>
+
+    <% if (reviews.length === 0) { %>
+    <div class="empty-state">
+        <h2>검색 결과가 없습니다</h2>
+        <p>다른 키워드로 검색해보세요.</p>
+        <div class="search-tips">
+            <h3>검색 팁:</h3>
+            <ul>
+                <li>더 일반적인 키워드를 사용해보세요</li>
+                <li>오타가 없는지 확인해보세요</li>
+                <li>다른 검색어를 시도해보세요</li>
+            </ul>
+        </div>
+        <a href="/" class="btn btn-primary">홈으로 가기</a>
+    </div>
+    <% } else { %>
+    <div class="review-grid">
+        <% reviews.forEach(review => { %>
+        <article class="review-card">
+            <a href="/reviews/<%= review.slug %>">
+                <div class="review-image">
+                    <img src="<%= review.featuredImage || '/images/default-review.svg' %>" alt="<%= review.title %>">
+                </div>
+                <div class="review-content">
+                    <span class="review-category"><%= review.category %></span>
+                    <h3><%= review.title %></h3>
+                    <p><%= review.metaDescription || review.content.substring(0, 150) %>...</p>
+                    <div class="review-meta">
+                        <span class="author">by <%= review.author.username %></span>
+                        <span class="date"><%= new Date(review.publishedAt || review.createdAt).toLocaleDateString('ko-KR') %></span>
+                    </div>
+                </div>
+            </a>
+        </article>
+        <% }) %>
+    </div>
+    <% } %>
+
+    <!-- 관련 카테고리 제안 -->
+    <section class="related-categories">
+        <h2>카테고리별로 둘러보기</h2>
+        <div class="category-grid">
+            <a href="/reviews/category/전자제품" class="category-card">
+                <div class="category-icon">📱</div>
+                <h3>전자제품</h3>
+            </a>
+            <a href="/reviews/category/생활용품" class="category-card">
+                <div class="category-icon">🏠</div>
+                <h3>생활용품</h3>
+            </a>
+            <a href="/reviews/category/패션" class="category-card">
+                <div class="category-icon">👕</div>
+                <h3>패션</h3>
+            </a>
+            <a href="/reviews/category/식품" class="category-card">
+                <div class="category-icon">🍽️</div>
+                <h3>식품</h3>
+            </a>
+        </div>
+    </section>
+</div>
+
+<style>
+.search-header {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.search-query {
+    font-size: 1.125rem;
+    color: #6c757d;
+}
+
+.search-tips {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.search-tips h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.search-tips ul {
+    list-style-position: inside;
+    color: #6c757d;
+}
+
+.related-categories {
+    margin-top: 4rem;
+}
+
+.related-categories h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+</style>
+
+<%- include('footer') %>

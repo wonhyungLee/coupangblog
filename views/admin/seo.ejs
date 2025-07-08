@@ -1,0 +1,267 @@
+<%- include('../header') %>
+
+<div class="container">
+    <div class="admin-header">
+        <h1>SEO 설정</h1>
+    </div>
+
+    <div class="seo-container">
+        <div class="seo-section">
+            <h2>사이트맵 관리</h2>
+            <p>검색 엔진이 사이트를 더 잘 이해할 수 있도록 사이트맵을 생성합니다.</p>
+            <button id="generate-sitemap" class="btn btn-primary">사이트맵 생성</button>
+            <div id="sitemap-result" class="result-message"></div>
+        </div>
+
+        <div class="seo-section">
+            <h2>검색 엔진 최적화 팁</h2>
+            <div class="seo-tips">
+                <div class="tip-card">
+                    <h3>✓ 제목 최적화</h3>
+                    <p>각 리뷰의 제목은 60자 이내로 작성하고, 주요 키워드를 포함시키세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>✓ 메타 설명</h3>
+                    <p>160자 이내의 매력적인 설명으로 클릭률을 높이세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>✓ 키워드 전략</h3>
+                    <p>자연스럽게 키워드를 본문에 포함시키되, 과도한 반복은 피하세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>✓ 이미지 최적화</h3>
+                    <p>이미지에 대체 텍스트(alt)를 추가하고, 파일 크기를 최적화하세요.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-section">
+            <h2>현재 SEO 상태</h2>
+            <div class="seo-stats">
+                <div class="stat-item">
+                    <label>게시된 리뷰 수:</label>
+                    <span id="published-count">-</span>
+                </div>
+                <div class="stat-item">
+                    <label>사이트맵 최종 생성:</label>
+                    <span id="sitemap-date">확인 중...</span>
+                </div>
+                <div class="stat-item">
+                    <label>robots.txt:</label>
+                    <a href="/robots.txt" target="_blank" class="link">확인하기</a>
+                </div>
+                <div class="stat-item">
+                    <label>sitemap.xml:</label>
+                    <a href="/sitemap.xml" target="_blank" class="link">확인하기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-section">
+            <h2>Google Search Console 연동</h2>
+            <ol class="setup-steps">
+                <li>Google Search Console에 사이트를 등록하세요</li>
+                <li>소유권을 확인하세요 (HTML 태그 또는 DNS 확인)</li>
+                <li>사이트맵을 제출하세요: <code><%= process.env.SITE_URL %>/sitemap.xml</code></li>
+                <li>색인 생성 요청을 보내세요</li>
+            </ol>
+        </div>
+
+        <div class="seo-section">
+            <h2>구조화된 데이터</h2>
+            <p>리뷰 페이지에는 다음과 같은 구조화된 데이터가 자동으로 포함됩니다:</p>
+            <ul>
+                <li>Review (리뷰 정보)</li>
+                <li>AggregateRating (평점 정보)</li>
+                <li>Product (제품 정보)</li>
+                <li>Organization (사이트 정보)</li>
+            </ul>
+            <p>
+                <a href="https://search.google.com/test/rich-results" target="_blank" class="btn btn-secondary">
+                    리치 결과 테스트 도구
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.seo-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.seo-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.seo-section h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.seo-tips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.tip-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.tip-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #28a745;
+}
+
+.tip-card p {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.result-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 4px;
+    display: none;
+}
+
+.result-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+.result-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+.seo-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.stat-item label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.setup-steps {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.setup-steps li {
+    margin-bottom: 0.75rem;
+}
+
+code {
+    background: #e9ecef;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+}
+</style>
+
+<script>
+// 사이트맵 생성
+document.getElementById('generate-sitemap').addEventListener('click', async function() {
+    const button = this;
+    const resultDiv = document.getElementById('sitemap-result');
+    
+    button.disabled = true;
+    button.textContent = '생성 중...';
+    resultDiv.className = 'result-message';
+    
+    try {
+        const response = await fetch('/admin/generate-sitemap', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            resultDiv.className = 'result-message success';
+            resultDiv.textContent = '사이트맵이 성공적으로 생성되었습니다!';
+            loadSEOStats();
+        } else {
+            resultDiv.className = 'result-message error';
+            resultDiv.textContent = data.error || '사이트맵 생성 중 오류가 발생했습니다.';
+        }
+    } catch (error) {
+        resultDiv.className = 'result-message error';
+        resultDiv.textContent = '사이트맵 생성 중 오류가 발생했습니다.';
+    } finally {
+        button.disabled = false;
+        button.textContent = '사이트맵 생성';
+    }
+});
+
+// SEO 통계 로드
+async function loadSEOStats() {
+    try {
+        // 게시된 리뷰 수 가져오기
+        const response = await fetch('/reviews/api?limit=1');
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('published-count').textContent = data.pagination.total || '0';
+        }
+        
+        // 사이트맵 최종 수정일 확인
+        const sitemapResponse = await fetch('/sitemap.xml', { method: 'HEAD' });
+        if (sitemapResponse.ok) {
+            const lastModified = sitemapResponse.headers.get('last-modified');
+            if (lastModified) {
+                const date = new Date(lastModified);
+                document.getElementById('sitemap-date').textContent = date.toLocaleDateString('ko-KR');
+            } else {
+                document.getElementById('sitemap-date').textContent = '생성되지 않음';
+            }
+        }
+    } catch (error) {
+        console.error('SEO 통계 로드 실패:', error);
+    }
+}
+
+// 페이지 로드 시 통계 로드
+document.addEventListener('DOMContentLoaded', loadSEOStats);
+</script>
+
+<%- include('../footer') %>

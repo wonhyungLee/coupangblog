@@ -82,7 +82,7 @@
                 <a href="/game/tetris" class="btn btn-primary">지금 플레이하기</a>
             </div>
             <div class="game-preview">
-                <img src="/images/tetris-preview.png" alt="테트리스 게임 미리보기">
+                <img src="/images/tetris-preview.svg" alt="테트리스 게임 미리보기">
             </div>
         </div>
     </section>
@@ -92,7 +92,7 @@
 // 최신 리뷰 로드
 async function loadLatestReviews() {
     try {
-        const response = await fetch('/api/reviews?limit=6');
+        const response = await fetch('/reviews/api?limit=6');
         const data = await response.json();
         
         const reviewsContainer = document.getElementById('latest-reviews');
@@ -100,7 +100,7 @@ async function loadLatestReviews() {
             <article class="review-card">
                 <a href="/reviews/${review.slug}">
                     <div class="review-image">
-                        <img src="${review.featuredImage || '/images/default-review.png'}" alt="${review.title}">
+                        <img src="${review.featuredImage || '/images/default-review.svg'}" alt="${review.title}">
                     </div>
                     <div class="review-content">
                         <span class="review-category">${review.category}</span>

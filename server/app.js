@@ -77,7 +77,7 @@ const gameRoutes = require('./routes/game');
 
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
-app.use('/api/reviews', reviewRoutes);
+app.use('/reviews', reviewRoutes);
 app.use('/game', gameRoutes);
 
 // 홈 페이지

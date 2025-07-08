@@ -135,7 +135,7 @@
             <article class="review-card">
                 <a href="/reviews/<%= related.slug %>">
                     <div class="review-image">
-                        <img src="<%= related.featuredImage || '/images/default-review.png' %>" alt="<%= related.title %>">
+                        <img src="<%= related.featuredImage || '/images/default-review.svg' %>" alt="<%= related.title %>">
                     </div>
                     <div class="review-content">
                         <span class="review-category"><%= related.category %></span>
@@ -379,7 +379,7 @@
 // 좋아요 기능
 async function likeReview(reviewId) {
     try {
-        const response = await fetch(`/api/reviews/${reviewId}/like`, {
+        const response = await fetch(`/reviews/${reviewId}/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

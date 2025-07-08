@@ -1,0 +1,7 @@
+/* Default placeholder SVG for reviews */
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <text x="200" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6c757d">
+    리뷰 이미지
+  </text>
+</svg>

@@ -221,6 +221,24 @@ router.get('/users', async (req, res) => {
   }
 });
 
+// 사용자 권한 변경
+router.put('/users/:id/role', async (req, res) => {
+  try {
+    const { role } = req.body;
+    
+    if (!['user', 'admin'].includes(role)) {
+      return res.status(400).json({ error: '유효하지 않은 권한입니다.' });
+    }
+    
+    await User.findByIdAndUpdate(req.params.id, { role });
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '권한 변경 실패' });
+  }
+});
+
 // SEO 설정
 router.get('/seo', (req, res) => {
   res.render('admin/seo', {

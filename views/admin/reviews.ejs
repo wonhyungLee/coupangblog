@@ -1,0 +1,173 @@
+<%- include('../header') %>
+
+<div class="container">
+    <div class="admin-header">
+        <h1>리뷰 관리</h1>
+        <a href="/admin/reviews/new" class="btn btn-primary">새 리뷰 작성</a>
+    </div>
+
+    <% if (reviews.length === 0) { %>
+    <div class="empty-state">
+        <p>아직 작성된 리뷰가 없습니다.</p>
+        <a href="/admin/reviews/new" class="btn btn-primary">첫 리뷰 작성하기</a>
+    </div>
+    <% } else { %>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>카테고리</th>
+                    <th>작성자</th>
+                    <th>상태</th>
+                    <th>조회수</th>
+                    <th>작성일</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% reviews.forEach(review => { %>
+                <tr>
+                    <td>
+                        <a href="/reviews/<%= review.slug %>" target="_blank">
+                            <%= review.title %>
+                        </a>
+                    </td>
+                    <td><%= review.category %></td>
+                    <td><%= review.author.username %></td>
+                    <td>
+                        <span class="status-badge status-<%= review.status %>">
+                            <%= review.status === 'published' ? '게시됨' : '초안' %>
+                        </span>
+                    </td>
+                    <td><%= review.views %></td>
+                    <td><%= new Date(review.createdAt).toLocaleDateString('ko-KR') %></td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="/admin/reviews/<%= review._id %>/edit" class="btn-small btn-edit">수정</a>
+                            <button onclick="deleteReview('<%= review._id %>')" class="btn-small btn-delete">삭제</button>
+                        </div>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <% if (totalPages > 1) { %>
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+        <a href="/admin/reviews?page=<%= currentPage - 1 %>" class="pagination-btn">&laquo; 이전</a>
+        <% } %>
+        
+        <% for(let i = 1; i <= totalPages; i++) { %>
+            <% if (i === currentPage) { %>
+            <span class="pagination-current"><%= i %></span>
+            <% } else { %>
+            <a href="/admin/reviews?page=<%= i %>" class="pagination-btn"><%= i %></a>
+            <% } %>
+        <% } %>
+        
+        <% if (currentPage < totalPages) { %>
+        <a href="/admin/reviews?page=<%= currentPage + 1 %>" class="pagination-btn">다음 &raquo;</a>
+        <% } %>
+    </div>
+    <% } %>
+    <% } %>
+</div>
+
+<style>
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.empty-state p {
+    font-size: 1.125rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-small {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: #28a745;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.pagination-btn,
+.pagination-current {
+    padding: 0.5rem 1rem;
+    border: 1px solid #dee2e6;
+    text-decoration: none;
+    color: #007bff;
+    border-radius: 4px;
+}
+
+.pagination-current {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-btn:hover {
+    background: #e9ecef;
+}
+</style>
+
+<script>
+async function deleteReview(reviewId) {
+    if (!confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/admin/reviews/${reviewId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            alert('리뷰가 삭제되었습니다.');
+            window.location.reload();
+        } else {
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    } catch (error) {
+        console.error('삭제 실패:', error);
+        alert('삭제 중 오류가 발생했습니다.');
+    }
+}
+</script>
+
+<%- include('../footer') %>

@@ -1,0 +1,40 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Game Board -->
+  <rect x="200" y="50" width="200" height="300" fill="#000" stroke="#333" stroke-width="2"/>
+  
+  <!-- Tetris Blocks -->
+  <rect x="220" y="270" width="20" height="20" fill="#FF0D72"/>
+  <rect x="240" y="270" width="20" height="20" fill="#FF0D72"/>
+  <rect x="260" y="270" width="20" height="20" fill="#FF0D72"/>
+  <rect x="240" y="250" width="20" height="20" fill="#FF0D72"/>
+  
+  <rect x="320" y="290" width="20" height="40" fill="#0DC2FF"/>
+  <rect x="340" y="290" width="20" height="40" fill="#0DC2FF"/>
+  
+  <rect x="280" y="310" width="40" height="20" fill="#F538FF"/>
+  <rect x="300" y="290" width="20" height="20" fill="#F538FF"/>
+  
+  <!-- Score Display -->
+  <rect x="420" y="50" width="120" height="80" fill="rgba(255,255,255,0.1)" rx="5"/>
+  <text x="480" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">
+    SCORE
+  </text>
+  <text x="480" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">
+    12,450
+  </text>
+  
+  <!-- Title -->
+  <text x="300" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white">
+    클래식 테트리스 게임
+  </text>
+</svg>

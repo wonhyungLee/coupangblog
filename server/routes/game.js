@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
         name: '테트리스',
         description: '클래식 테트리스 게임',
         url: '/game/tetris',
-        thumbnail: '/images/tetris-thumb.png'
+        thumbnail: '/images/tetris-thumb.svg'
       }
     ]
   });

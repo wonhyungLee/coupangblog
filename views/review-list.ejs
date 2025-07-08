@@ -1,0 +1,152 @@
+<%- include('header') %>
+
+<div class="container">
+    <div class="page-header">
+        <h1><%= category ? category + ' 리뷰' : '전체 리뷰' %></h1>
+        <div class="filter-options">
+            <select id="category-filter" class="form-select">
+                <option value="">전체 카테고리</option>
+                <option value="전자제품" <%= category === '전자제품' ? 'selected' : '' %>>전자제품</option>
+                <option value="생활용품" <%= category === '생활용품' ? 'selected' : '' %>>생활용품</option>
+                <option value="패션" <%= category === '패션' ? 'selected' : '' %>>패션</option>
+                <option value="식품" <%= category === '식품' ? 'selected' : '' %>>식품</option>
+            </select>
+        </div>
+    </div>
+
+    <% if (reviews.length === 0) { %>
+    <div class="empty-state">
+        <p>아직 리뷰가 없습니다.</p>
+        <a href="/" class="btn btn-primary">홈으로 가기</a>
+    </div>
+    <% } else { %>
+    <div class="review-grid">
+        <% reviews.forEach(review => { %>
+        <article class="review-card">
+            <a href="/reviews/<%= review.slug %>">
+                <div class="review-image">
+                    <img src="<%= review.featuredImage || '/images/default-review.svg' %>" alt="<%= review.title %>">
+                </div>
+                <div class="review-content">
+                    <span class="review-category"><%= review.category %></span>
+                    <h3><%= review.title %></h3>
+                    <p><%= review.metaDescription || review.content.substring(0, 150) %>...</p>
+                    <div class="review-meta">
+                        <span class="author">by <%= review.author.username %></span>
+                        <span class="date"><%= new Date(review.publishedAt || review.createdAt).toLocaleDateString('ko-KR') %></span>
+                    </div>
+                    <div class="review-stats">
+                        <span class="views"><i class="icon-eye"></i> <%= review.views %></span>
+                        <span class="likes"><i class="icon-heart"></i> <%= review.likes %></span>
+                    </div>
+                </div>
+            </a>
+        </article>
+        <% }) %>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <% if (totalPages > 1) { %>
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %><%= category ? '&category=' + category : '' %>" class="pagination-btn">
+            &laquo; 이전
+        </a>
+        <% } %>
+        
+        <% 
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, currentPage + 2);
+        
+        if (startPage > 1) { %>
+            <a href="?page=1<%= category ? '&category=' + category : '' %>" class="pagination-btn">1</a>
+            <% if (startPage > 2) { %>
+                <span class="pagination-dots">...</span>
+            <% } %>
+        <% }
+        
+        for(let i = startPage; i <= endPage; i++) { %>
+            <% if (i === currentPage) { %>
+            <span class="pagination-current"><%= i %></span>
+            <% } else { %>
+            <a href="?page=<%= i %><%= category ? '&category=' + category : '' %>" class="pagination-btn"><%= i %></a>
+            <% } %>
+        <% }
+        
+        if (endPage < totalPages) { %>
+            <% if (endPage < totalPages - 1) { %>
+                <span class="pagination-dots">...</span>
+            <% } %>
+            <a href="?page=<%= totalPages %><%= category ? '&category=' + category : '' %>" class="pagination-btn">
+                <%= totalPages %>
+            </a>
+        <% } %>
+        
+        <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %><%= category ? '&category=' + category : '' %>" class="pagination-btn">
+            다음 &raquo;
+        </a>
+        <% } %>
+    </div>
+    <% } %>
+    <% } %>
+</div>
+
+<style>
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.filter-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.review-stats {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.icon-eye::before {
+    content: "👁️";
+    margin-right: 0.25rem;
+}
+
+.icon-heart::before {
+    content: "❤️";
+    margin-right: 0.25rem;
+}
+
+.pagination-dots {
+    padding: 0.5rem;
+    color: #6c757d;
+}
+</style>
+
+<script>
+// 카테고리 필터 변경
+document.getElementById('category-filter').addEventListener('change', function() {
+    const category = this.value;
+    if (category) {
+        window.location.href = `/reviews/category/${category}`;
+    } else {
+        window.location.href = '/reviews';
+    }
+});
+</script>
+
+<%- include('footer') %>

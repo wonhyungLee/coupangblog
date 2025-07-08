@@ -1,0 +1,88 @@
+<%- include('../header') %>
+
+<div class="container">
+    <h1 class="page-title">게임</h1>
+    
+    <div class="games-grid">
+        <% games.forEach(game => { %>
+        <div class="game-card">
+            <div class="game-thumbnail">
+                <img src="<%= game.thumbnail || '/images/tetris-thumb.svg' %>" alt="<%= game.name %>">
+            </div>
+            <div class="game-info">
+                <h3><%= game.name %></h3>
+                <p><%= game.description %></p>
+                <a href="<%= game.url %>" class="btn btn-primary">플레이하기</a>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    
+    <!-- Google AdSense -->
+    <% if (process.env.GOOGLE_ADSENSE_CLIENT) { %>
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+             data-ad-slot="YOUR-GAMES-AD-SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    <% } %>
+</div>
+
+<style>
+.page-title {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.game-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+}
+
+.game-thumbnail {
+    height: 200px;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.game-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-info {
+    padding: 1.5rem;
+}
+
+.game-info h3 {
+    margin-bottom: 0.5rem;
+}
+
+.game-info p {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+</style>
+
+<%- include('../footer') %>
