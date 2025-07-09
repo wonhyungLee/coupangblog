@@ -11,9 +11,9 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # 기본 변수
-APP_DIR="/home/ubuntu/tetris-game"
-NGINX_CONFIG="/etc/nginx/sites-available/tetris-coupang"
-DOMAIN="yourdomain.com"
+APP_DIR="/home/ubuntu/coupangblog"
+NGINX_CONFIG="/etc/nginx/sites-available/coupangblog"
+DOMAIN="wongram.shop"
 
 # 함수: 성공/실패 메시지
 print_status() {
