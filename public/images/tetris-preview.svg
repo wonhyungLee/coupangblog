@@ -1,40 +1,66 @@
-<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+<svg width="300" height="400" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
     </linearGradient>
   </defs>
   
-  <!-- Background -->
-  <rect width="600" height="400" fill="url(#bgGradient)"/>
+  <!-- Game board background -->
+  <rect width="300" height="400" fill="url(#bgGrad)" stroke="#333" stroke-width="2"/>
   
-  <!-- Game Board -->
-  <rect x="200" y="50" width="200" height="300" fill="#000" stroke="#333" stroke-width="2"/>
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="gameGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <rect width="30" height="30" fill="none" stroke="#333" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="300" height="400" fill="url(#gameGrid)"/>
   
-  <!-- Tetris Blocks -->
-  <rect x="220" y="270" width="20" height="20" fill="#FF0D72"/>
-  <rect x="240" y="270" width="20" height="20" fill="#FF0D72"/>
-  <rect x="260" y="270" width="20" height="20" fill="#FF0D72"/>
-  <rect x="240" y="250" width="20" height="20" fill="#FF0D72"/>
+  <!-- Bottom filled rows -->
+  <!-- Row 1 (bottom) -->
+  <rect x="0" y="370" width="30" height="30" fill="#ff6b6b"/>
+  <rect x="30" y="370" width="30" height="30" fill="#4ecdc4"/>
+  <rect x="60" y="370" width="30" height="30" fill="#45b7d1"/>
+  <rect x="90" y="370" width="30" height="30" fill="#f9ca24"/>
+  <rect x="120" y="370" width="30" height="30" fill="#6c5ce7"/>
+  <rect x="150" y="370" width="30" height="30" fill="#fd79a8"/>
+  <rect x="180" y="370" width="30" height="30" fill="#ff6b6b"/>
+  <rect x="210" y="370" width="30" height="30" fill="#4ecdc4"/>
+  <rect x="240" y="370" width="30" height="30" fill="#45b7d1"/>
+  <rect x="270" y="370" width="30" height="30" fill="#f9ca24"/>
   
-  <rect x="320" y="290" width="20" height="40" fill="#0DC2FF"/>
-  <rect x="340" y="290" width="20" height="40" fill="#0DC2FF"/>
+  <!-- Row 2 -->
+  <rect x="0" y="340" width="30" height="30" fill="#6c5ce7"/>
+  <rect x="30" y="340" width="30" height="30" fill="#fd79a8"/>
+  <rect x="90" y="340" width="30" height="30" fill="#ff6b6b"/>
+  <rect x="120" y="340" width="30" height="30" fill="#4ecdc4"/>
+  <rect x="150" y="340" width="30" height="30" fill="#45b7d1"/>
+  <rect x="180" y="340" width="30" height="30" fill="#f9ca24"/>
+  <rect x="210" y="340" width="30" height="30" fill="#6c5ce7"/>
+  <rect x="240" y="340" width="30" height="30" fill="#fd79a8"/>
+  <rect x="270" y="340" width="30" height="30" fill="#ff6b6b"/>
   
-  <rect x="280" y="310" width="40" height="20" fill="#F538FF"/>
-  <rect x="300" y="290" width="20" height="20" fill="#F538FF"/>
+  <!-- Row 3 -->
+  <rect x="60" y="310" width="30" height="30" fill="#4ecdc4"/>
+  <rect x="90" y="310" width="30" height="30" fill="#45b7d1"/>
+  <rect x="120" y="310" width="30" height="30" fill="#f9ca24"/>
+  <rect x="150" y="310" width="30" height="30" fill="#6c5ce7"/>
+  <rect x="180" y="310" width="30" height="30" fill="#fd79a8"/>
+  <rect x="210" y="310" width="30" height="30" fill="#ff6b6b"/>
+  <rect x="240" y="310" width="30" height="30" fill="#4ecdc4"/>
   
-  <!-- Score Display -->
-  <rect x="420" y="50" width="120" height="80" fill="rgba(255,255,255,0.1)" rx="5"/>
-  <text x="480" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">
-    SCORE
-  </text>
-  <text x="480" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">
-    12,450
-  </text>
+  <!-- Falling T-piece -->
+  <rect x="90" y="100" width="30" height="30" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
+  <rect x="120" y="100" width="30" height="30" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
+  <rect x="150" y="100" width="30" height="30" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
+  <rect x="120" y="70" width="30" height="30" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
   
-  <!-- Title -->
-  <text x="300" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white">
-    클래식 테트리스 게임
-  </text>
+  <!-- Side border highlights -->
+  <rect x="0" y="0" width="4" height="400" fill="#667eea"/>
+  <rect x="296" y="0" width="4" height="400" fill="#667eea"/>
+  
+  <!-- Top game info -->
+  <rect x="0" y="0" width="300" height="30" fill="rgba(102, 126, 234, 0.8)"/>
+  <text x="150" y="20" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" font-weight="bold">TETRIS MASTER</text>
 </svg>

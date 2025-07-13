@@ -29,20 +29,60 @@ router.get('/tetris', (req, res) => {
 // 게임 점수 저장 (API)
 router.post('/score', async (req, res) => {
   try {
-    const { game, score } = req.body;
+    const { game, playerName, score, level, lines } = req.body;
     
-    // 로그인한 사용자만 점수 저장
-    if (!req.session.user) {
-      return res.status(401).json({ error: '로그인이 필요합니다.' });
+    if (!game || !score) {
+      return res.status(400).json({ error: '게임과 점수는 필수입니다.' });
     }
     
-    // 여기에 점수 저장 로직 추가 가능
-    // 예: GameScore 모델 생성 및 저장
+    // 간단한 메모리 저장 (실제로는 데이터베이스에 저장해야 함)
+    if (!global.gameScores) {
+      global.gameScores = {};
+    }
+    if (!global.gameScores[game]) {
+      global.gameScores[game] = [];
+    }
+    
+    global.gameScores[game].push({
+      playerName: playerName || '익명',
+      score,
+      level,
+      lines,
+      timestamp: new Date()
+    });
+    
+    // 상위 100개만 유지
+    global.gameScores[game] = global.gameScores[game]
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 100);
     
     res.json({ success: true, message: '점수가 저장되었습니다.' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: '점수 저장 실패' });
+  }
+});
+
+// 게임 랭킹 조회 (API)
+router.get('/rankings', (req, res) => {
+  try {
+    const { game = 'tetris', limit = 10 } = req.query;
+    
+    if (!global.gameScores || !global.gameScores[game]) {
+      return res.json([]);
+    }
+    
+    const rankings = global.gameScores[game]
+      .slice(0, parseInt(limit))
+      .map((score, index) => ({
+        rank: index + 1,
+        ...score
+      }));
+    
+    res.json(rankings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '랭킹 조회 실패' });
   }
 });
 

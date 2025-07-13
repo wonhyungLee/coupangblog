@@ -454,3 +454,114 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Enhanced Error and No Content States */
+.no-reviews, .error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.no-reviews-icon, .error-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.no-reviews h3, .error-message h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.no-reviews p, .error-message p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+}
+
+/* Enhanced Game Preview Styles */
+.tetris-mini-board {
+    width: 180px;
+    height: 240px;
+    background: #000;
+    border: 2px solid #333;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1px;
+    padding: 10px;
+    position: relative;
+}
+
+.mini-block {
+    background: #1a1a1a;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.mini-block:hover {
+    transform: scale(1.1);
+}
+
+.mini-block.red { background: #ff6b6b; }
+.mini-block.blue { background: #4ecdc4; }
+.mini-block.green { background: #45b7d1; }
+.mini-block.yellow { background: #f9ca24; }
+.mini-block.purple { background: #6c5ce7; }
+.mini-block.orange { background: #fd79a8; }
+
+/* Animation for blocks */
+@keyframes blockPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.mini-block.red,
+.mini-block.blue,
+.mini-block.green,
+.mini-block.yellow,
+.mini-block.purple,
+.mini-block.orange {
+    animation: blockPulse 2s ease-in-out infinite;
+}
+
+.mini-block.red { animation-delay: 0s; }
+.mini-block.blue { animation-delay: 0.2s; }
+.mini-block.green { animation-delay: 0.4s; }
+.mini-block.yellow { animation-delay: 0.6s; }
+.mini-block.purple { animation-delay: 0.8s; }
+.mini-block.orange { animation-delay: 1s; }

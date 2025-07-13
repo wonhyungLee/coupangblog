@@ -1,38 +1,150 @@
 <%- include('header') %>
 
+<!-- PWA 설치 프롬프트 -->
+<div id="pwa-prompt" class="pwa-prompt" style="display: none;">
+    <div class="pwa-content">
+        <span>📱 WonGram Shop을 앱으로 설치하세요!</span>
+        <button id="pwa-install" class="btn btn-primary">설치</button>
+        <button id="pwa-dismiss" class="btn btn-secondary">닫기</button>
+    </div>
+</div>
+
 <div class="container">
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h2>쿠팡 물품 비교 리뷰 & 테트리스 게임</h2>
-            <p>실제 사용자의 솔직한 리뷰로 현명한 쇼핑을 도와드립니다.</p>
-            <div class="hero-buttons">
-                <a href="/reviews" class="btn btn-primary">리뷰 보기</a>
-                <a href="/game/tetris" class="btn btn-secondary">테트리스 플레이</a>
+            <div class="hero-text">
+                <h1>🛍️ WonGram Shop</h1>
+                <h2>AI 기반 쿠팡 리뷰 & 테트리스 게임</h2>
+                <p>🤖 <strong>Gemini AI</strong>가 도와주는 스마트한 쇼핑 가이드와 재미있는 게임을 한 곳에서!</p>
+                <div class="hero-features">
+                    <div class="feature">
+                        <span class="feature-icon">🔍</span>
+                        <span>AI 리뷰 분석</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🎮</span>
+                        <span>테트리스 게임</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">📱</span>
+                        <span>PWA 지원</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="/reviews" class="btn btn-primary btn-large">
+                        <span class="btn-icon">📖</span>
+                        리뷰 보기
+                    </a>
+                    <a href="/game/tetris" class="btn btn-secondary btn-large">
+                        <span class="btn-icon">🎮</span>
+                        테트리스 플레이
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="float-item float-1">🛒</div>
+                    <div class="float-item float-2">⭐</div>
+                    <div class="float-item float-3">🎯</div>
+                    <div class="float-item float-4">💡</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Google AdSense Banner -->
-    <% if (process.env.GOOGLE_ADSENSE_CLIENT) { %>
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
-             data-ad-slot="YOUR-AD-SLOT-ID"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-    <% } %>
+    <!-- Quick Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-reviews">0</div>
+                <div class="stat-label">총 리뷰</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-games">1,247</div>
+                <div class="stat-label">게임 플레이</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">⚡</div>
+                <div class="stat-label">AI 분석</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">📱</div>
+                <div class="stat-label">PWA 지원</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Game Section -->
+    <section class="game-spotlight">
+        <div class="spotlight-content">
+            <div class="spotlight-text">
+                <h2>🎮 테트리스 마스터에 도전하세요!</h2>
+                <p>클래식한 테트리스 게임을 모던한 디자인으로 즐겨보세요. 모바일과 데스크톱 모두 지원!</p>
+                <div class="game-features">
+                    <div class="game-feature">
+                        <span class="feature-check">✓</span>
+                        <span>60FPS 부드러운 게임플레이</span>
+                    </div>
+                    <div class="game-feature">
+                        <span class="feature-check">✓</span>
+                        <span>터치 & 키보드 컨트롤</span>
+                    </div>
+                    <div class="game-feature">
+                        <span class="feature-check">✓</span>
+                        <span>실시간 랭킹 시스템</span>
+                    </div>
+                    <div class="game-feature">
+                        <span class="feature-check">✓</span>
+                        <span>오프라인 플레이 가능</span>
+                    </div>
+                </div>
+                <a href="/game/tetris" class="btn btn-game">
+                    <span class="btn-icon">🎯</span>
+                    지금 플레이하기
+                </a>
+            </div>
+            <div class="spotlight-preview">
+                <div class="game-preview-container">
+                    <div class="tetris-mini-board">
+                        <!-- Row 1 -->
+                        <div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div>
+                        <!-- Row 2 -->
+                        <div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div>
+                        <!-- Row 3 -->
+                        <div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div>
+                        <!-- Row 4 -->
+                        <div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div><div class="mini-block"></div>
+                        <!-- Row 5 -->
+                        <div class="mini-block red"></div><div class="mini-block"></div><div class="mini-block blue"></div><div class="mini-block"></div><div class="mini-block green"></div><div class="mini-block"></div>
+                        <!-- Row 6 -->
+                        <div class="mini-block red"></div><div class="mini-block red"></div><div class="mini-block blue"></div><div class="mini-block blue"></div><div class="mini-block green"></div><div class="mini-block green"></div>
+                        <!-- Row 7 -->
+                        <div class="mini-block yellow"></div><div class="mini-block purple"></div><div class="mini-block orange"></div><div class="mini-block red"></div><div class="mini-block blue"></div><div class="mini-block green"></div>
+                        <!-- Row 8 -->
+                        <div class="mini-block yellow"></div><div class="mini-block purple"></div><div class="mini-block orange"></div><div class="mini-block yellow"></div><div class="mini-block purple"></div><div class="mini-block orange"></div>
+                    </div>
+                    <div class="preview-overlay">
+                        <div class="play-button">🎮</div>
+                        <div class="play-text">플레이하기</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Latest Reviews Section -->
     <section class="latest-reviews">
-        <h2>최신 리뷰</h2>
+        <div class="section-header">
+            <h2>📚 최신 리뷰</h2>
+            <p>AI가 분석한 정확하고 유용한 제품 리뷰를 확인해보세요</p>
+        </div>
         <div class="review-grid" id="latest-reviews">
-            <!-- 리뷰가 여기에 동적으로 로드됩니다 -->
+            <!-- 로딩 스피너 -->
+            <div class="loading-placeholder">
+                <div class="spinner"></div>
+                <p>리뷰를 불러오는 중...</p>
+            </div>
         </div>
         <div class="text-center">
             <a href="/reviews" class="btn btn-outline">모든 리뷰 보기</a>
@@ -41,86 +153,615 @@
 
     <!-- Categories Section -->
     <section class="categories">
-        <h2>카테고리별 리뷰</h2>
+        <div class="section-header">
+            <h2>🏷️ 카테고리별 리뷰</h2>
+            <p>관심 있는 분야의 제품 리뷰를 찾아보세요</p>
+        </div>
         <div class="category-grid">
-            <a href="/reviews/category/전자제품" class="category-card">
-                <div class="category-icon">📱</div>
-                <h3>전자제품</h3>
-                <p>스마트폰, 노트북, 가전제품</p>
+            <a href="/reviews/category/전자제품" class="category-card electronics">
+                <div class="category-background"></div>
+                <div class="category-content">
+                    <div class="category-icon">📱</div>
+                    <h3>전자제품</h3>
+                    <p>스마트폰, 노트북, 가전제품</p>
+                    <span class="category-count">12개 리뷰</span>
+                </div>
             </a>
-            <a href="/reviews/category/생활용품" class="category-card">
-                <div class="category-icon">🏠</div>
-                <h3>생활용품</h3>
-                <p>주방용품, 청소용품, 인테리어</p>
+            <a href="/reviews/category/생활용품" class="category-card lifestyle">
+                <div class="category-background"></div>
+                <div class="category-content">
+                    <div class="category-icon">🏠</div>
+                    <h3>생활용품</h3>
+                    <p>주방용품, 청소용품, 인테리어</p>
+                    <span class="category-count">8개 리뷰</span>
+                </div>
             </a>
-            <a href="/reviews/category/패션" class="category-card">
-                <div class="category-icon">👕</div>
-                <h3>패션</h3>
-                <p>의류, 신발, 액세서리</p>
+            <a href="/reviews/category/패션" class="category-card fashion">
+                <div class="category-background"></div>
+                <div class="category-content">
+                    <div class="category-icon">👕</div>
+                    <h3>패션</h3>
+                    <p>의류, 신발, 액세서리</p>
+                    <span class="category-count">6개 리뷰</span>
+                </div>
             </a>
-            <a href="/reviews/category/식품" class="category-card">
-                <div class="category-icon">🍽️</div>
-                <h3>식품</h3>
-                <p>간편식, 건강식품, 음료</p>
+            <a href="/reviews/category/식품" class="category-card food">
+                <div class="category-background"></div>
+                <div class="category-content">
+                    <div class="category-icon">🍽️</div>
+                    <h3>식품</h3>
+                    <p>간편식, 건강식품, 음료</p>
+                    <span class="category-count">4개 리뷰</span>
+                </div>
             </a>
         </div>
     </section>
 
-    <!-- Game Section -->
-    <section class="game-section">
-        <h2>테트리스 게임</h2>
-        <div class="game-promo">
-            <div class="game-info">
-                <h3>클래식 테트리스를 즐겨보세요!</h3>
-                <p>공부나 쇼핑 중간에 잠시 휴식을 취하며 테트리스 게임을 즐겨보세요.</p>
-                <ul>
-                    <li>✓ 클래식한 게임플레이</li>
-                    <li>✓ 레벨별 난이도 조절</li>
-                    <li>✓ 최고 점수 기록</li>
-                    <li>✓ 모바일 지원</li>
-                </ul>
-                <a href="/game/tetris" class="btn btn-primary">지금 플레이하기</a>
+    <!-- AI Features Section -->
+    <section class="ai-features">
+        <div class="section-header">
+            <h2>🤖 AI 기반 스마트 기능</h2>
+            <p>Google Gemini AI가 제공하는 혁신적인 쇼핑 도우미</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>맞춤형 추천</h3>
+                <p>사용자 취향에 맞는 제품을 AI가 똑똑하게 추천해드립니다.</p>
             </div>
-            <div class="game-preview">
-                <img src="/images/tetris-preview.svg" alt="테트리스 게임 미리보기">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>리뷰 분석</h3>
+                <p>수많은 리뷰를 분석해서 핵심 정보만 정리해드립니다.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>가격 비교</h3>
+                <p>다양한 쇼핑몰의 가격을 비교해서 최저가를 찾아드립니다.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>알림 서비스</h3>
+                <p>관심 제품의 할인 정보와 새로운 리뷰를 알려드립니다.</p>
             </div>
         </div>
     </section>
 </div>
 
-<script>
-// 최신 리뷰 로드
-async function loadLatestReviews() {
-    try {
-        const response = await fetch('/reviews/api?limit=6');
-        const data = await response.json();
-        
-        const reviewsContainer = document.getElementById('latest-reviews');
-        reviewsContainer.innerHTML = data.reviews.map(review => `
-            <article class="review-card">
-                <a href="/reviews/${review.slug}">
-                    <div class="review-image">
-                        <img src="${review.featuredImage || '/images/default-review.svg'}" alt="${review.title}">
-                    </div>
-                    <div class="review-content">
-                        <span class="review-category">${review.category}</span>
-                        <h3>${review.title}</h3>
-                        <p>${review.metaDescription || review.content.substring(0, 100)}...</p>
-                        <div class="review-meta">
-                            <span class="author">by ${review.author.username}</span>
-                            <span class="date">${new Date(review.publishedAt).toLocaleDateString('ko-KR')}</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-        `).join('');
-    } catch (error) {
-        console.error('리뷰 로드 실패:', error);
+<!-- Enhanced CSS -->
+<style>
+/* PWA Prompt */
+.pwa-prompt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+}
+
+.pwa-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Enhanced Hero Section */
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.hero h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-features {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.btn-icon {
+    margin-right: 0.5rem;
+}
+
+/* Floating Animation */
+.floating-elements {
+    position: relative;
+    height: 200px;
+}
+
+.float-item {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.float-1 { top: 20px; left: 20px; animation-delay: 0s; }
+.float-2 { top: 80px; right: 30px; animation-delay: 1s; }
+.float-3 { bottom: 60px; left: 50px; animation-delay: 2s; }
+.float-4 { bottom: 20px; right: 20px; animation-delay: 0.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Stats Section */
+.stats-section {
+    margin: 3rem 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Game Spotlight */
+.game-spotlight {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    padding: 4rem 0;
+    border-radius: 20px;
+    margin: 4rem 0;
+    color: white;
+}
+
+.spotlight-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: center;
+}
+
+.game-features {
+    margin: 2rem 0;
+}
+
+.game-feature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.feature-check {
+    color: #4ecdc4;
+    font-weight: bold;
+}
+
+.btn-game {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid white;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.btn-game:hover {
+    background: white;
+    color: #ee5a24;
+}
+
+/* Game Preview */
+.game-preview-container {
+    position: relative;
+    width: 250px;
+    height: 300px;
+    background: #000;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.3);
+}
+
+.tetris-mini-board {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    height: 100%;
+    padding: 15px;
+    gap: 2px;
+}
+
+.mini-block {
+    border-radius: 2px;
+    background: #2a2a2a;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+.mini-block:hover {
+    opacity: 0.6;
+}
+
+.mini-block.red { background: #ff6b6b; opacity: 0.9; }
+.mini-block.blue { background: #4ecdc4; opacity: 0.9; }
+.mini-block.green { background: #45b7d1; opacity: 0.9; }
+.mini-block.yellow { background: #f9ca24; opacity: 0.9; }
+.mini-block.purple { background: #6c5ce7; opacity: 0.9; }
+.mini-block.orange { background: #fd79a8; opacity: 0.9; }
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.game-preview-container:hover .preview-overlay {
+    opacity: 1;
+}
+
+.play-button {
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.play-text {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Enhanced Category Cards */
+.category-card {
+    position: relative;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.category-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    transition: opacity 0.3s;
+}
+
+.electronics .category-background { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.lifestyle .category-background { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.fashion .category-background { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.food .category-background { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+.category-card:hover .category-background {
+    opacity: 0.2;
+}
+
+.category-content {
+    position: relative;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.category-count {
+    background: rgba(0,123,255,0.1);
+    color: #007bff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    align-self: flex-start;
+}
+
+/* AI Features */
+.ai-features {
+    margin: 4rem 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Enhanced Animations */
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+/* Loading Placeholder */
+.loading-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content,
+    .spotlight-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-// 페이지 로드 시 최신 리뷰 가져오기
-document.addEventListener('DOMContentLoaded', loadLatestReviews);
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero h2 { font-size: 1.4rem; }
+    
+    .hero-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<!-- Enhanced JavaScript -->
+<script>
+// PWA Installation
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('pwa-prompt').style.display = 'block';
+});
+
+document.getElementById('pwa-install').addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`PWA 설치 결과: ${outcome}`);
+        deferredPrompt = null;
+        document.getElementById('pwa-prompt').style.display = 'none';
+    }
+});
+
+document.getElementById('pwa-dismiss').addEventListener('click', () => {
+    document.getElementById('pwa-prompt').style.display = 'none';
+});
+
+// Enhanced review loading with error handling
+async function loadLatestReviews() {
+    try {
+        const response = await fetch('/reviews/api?limit=6');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        const reviewsContainer = document.getElementById('latest-reviews');
+        
+        if (data.reviews && data.reviews.length > 0) {
+            reviewsContainer.innerHTML = data.reviews.map(review => `
+                <article class="review-card">
+                    <a href="/reviews/${review.slug}">
+                        <div class="review-image">
+                            <img src="${review.featuredImage || '/images/default-review.svg'}" 
+                                 alt="${review.title}"
+                                 onerror="this.src='/images/default-review.svg'">
+                        </div>
+                        <div class="review-content">
+                            <span class="review-category">${review.category}</span>
+                            <h3>${review.title}</h3>
+                            <p>${review.metaDescription || review.content.substring(0, 100)}...</p>
+                            <div class="review-meta">
+                                <span class="author">by ${review.author?.username || '관리자'}</span>
+                                <span class="date">${new Date(review.publishedAt).toLocaleDateString('ko-KR')}</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            `).join('');
+            
+            // Update total reviews count
+            document.getElementById('total-reviews').textContent = data.total || data.reviews.length;
+        } else {
+            reviewsContainer.innerHTML = `
+                <div class="no-reviews">
+                    <div class="no-reviews-icon">📝</div>
+                    <h3>아직 리뷰가 없습니다</h3>
+                    <p>첫 번째 리뷰를 작성해보세요!</p>
+                    <a href="/admin" class="btn btn-primary">리뷰 작성하기</a>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('리뷰 로드 실패:', error);
+        const reviewsContainer = document.getElementById('latest-reviews');
+        reviewsContainer.innerHTML = `
+            <div class="error-message">
+                <div class="error-icon">😅</div>
+                <h3>리뷰를 불러올 수 없습니다</h3>
+                <p>잠시 후 다시 시도해주세요.</p>
+                <button onclick="loadLatestReviews()" class="btn btn-primary">다시 시도</button>
+            </div>
+        `;
+    }
+}
+
+// Counter animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+        const target = parseInt(counter.textContent);
+        if (isNaN(target)) return;
+        
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target.toLocaleString();
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current).toLocaleString();
+            }
+        }, 30);
+    });
+}
+
+// Page load events
+document.addEventListener('DOMContentLoaded', () => {
+    loadLatestReviews();
+    
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('stats-section')) {
+                    animateCounters();
+                }
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+    
+    // Observe sections for scroll animations
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s, transform 0.6s';
+        observer.observe(section);
+    });
+});
+
+// Service Worker registration
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('SW registered'))
+        .catch(() => console.log('SW registration failed'));
+}
 </script>
+
+<!-- Enhanced Main Page Script -->
+<script src="/js/main.js"></script>
 
 <%- include('footer') %>
