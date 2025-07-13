@@ -74,9 +74,11 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const reviewRoutes = require('./routes/review');
 const gameRoutes = require('./routes/game');
+const aiRoutes = require('./routes/ai');
 
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/admin/ai', aiRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/game', gameRoutes);
 
