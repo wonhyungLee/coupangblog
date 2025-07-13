@@ -46,7 +46,7 @@
     <script src="/js/pwa.js"></script>
     
     <!-- AI Assistant (Admin only) -->
-    <% if (user && user.role === 'admin') { %>
+    <% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
     <script src="/js/ai-assistant.js"></script>
     <% } %>
     

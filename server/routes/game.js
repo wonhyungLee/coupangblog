@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.render('games/index', {
     title: '게임',
-    user: req.session.user,
+    user: req.session.user || null,
     games: [
       {
         name: '테트리스',
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.get('/tetris', (req, res) => {
   res.render('games/tetris', {
     title: '테트리스 게임',
-    user: req.session.user,
+    user: req.session.user || null,
     googleAdsenseClient: process.env.GOOGLE_ADSENSE_CLIENT
   });
 });

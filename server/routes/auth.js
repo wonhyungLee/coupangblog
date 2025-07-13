@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 router.get('/register', (req, res) => {
   res.render('auth/register', { 
     title: '회원가입',
+    user: req.session.user || null,
     error: null 
   });
 });
@@ -21,6 +22,7 @@ router.post('/register', async (req, res) => {
     if (existingUser) {
       return res.render('auth/register', {
         title: '회원가입',
+        user: req.session.user || null,
         error: '이미 사용 중인 이메일입니다.'
       });
     }
@@ -47,6 +49,7 @@ router.post('/register', async (req, res) => {
     console.error(error);
     res.render('auth/register', {
       title: '회원가입',
+      user: req.session.user || null,
       error: '회원가입 중 오류가 발생했습니다.'
     });
   }
@@ -56,6 +59,7 @@ router.post('/register', async (req, res) => {
 router.get('/login', (req, res) => {
   res.render('auth/login', { 
     title: '로그인',
+    user: req.session.user || null,
     error: null 
   });
 });
@@ -70,6 +74,7 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.render('auth/login', {
         title: '로그인',
+        user: req.session.user || null,
         error: '이메일 또는 비밀번호가 올바르지 않습니다.'
       });
     }
@@ -79,6 +84,7 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.render('auth/login', {
         title: '로그인',
+        user: req.session.user || null,
         error: '이메일 또는 비밀번호가 올바르지 않습니다.'
       });
     }
@@ -105,6 +111,7 @@ router.post('/login', async (req, res) => {
     console.error(error);
     res.render('auth/login', {
       title: '로그인',
+      user: req.session.user || null,
       error: '로그인 중 오류가 발생했습니다.'
     });
   }
